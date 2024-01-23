@@ -1,8 +1,10 @@
 .pop-up {
   background: hsl(0deg 0% 0% / 50%);
   width: 100%;
+  max-width: 880px;
   height: 100vh;
   position: fixed;
+  top: 0;
   z-index: 9;
   display: flex;
   justify-content: center;
