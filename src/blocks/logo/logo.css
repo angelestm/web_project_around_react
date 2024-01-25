@@ -6,6 +6,13 @@
 }
 
 @media screen
+and (max-width: 880px) {
+  .logo {
+    margin-left: 30px;
+  }
+}
+
+@media screen
 and (max-width: 320px) {
   .logo {
     width: 126px;

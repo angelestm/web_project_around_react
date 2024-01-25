@@ -14,7 +14,7 @@ function Card ({card, id, onCardClick}) {
           />
           <img
               src={card.link}
-              alt="Foto del Valle de Yosemite"
+              alt={`Foto de ${card.name}`}
               className="element__image"
               onClick={handleOnClick}
           />

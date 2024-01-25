@@ -9,6 +9,14 @@
 }
 
 @media screen
+and (max-width: 880px) {
+  .profile__info {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+@media screen
 and (max-width: 320px) {
   .profile__info {
     column-gap: 10px;

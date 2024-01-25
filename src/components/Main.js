@@ -147,16 +147,6 @@ function Main(
         </form>
       </PopupWithForm>
 
-      {/* Pop up With Image */}
-      <div id="pop-up3" className="pop-up popup_type_image">
-        <div className="zoom-pop-up">
-          <img id="image-popUp" className="zoom-pop-up__image"/>
-          <img alt="Icono de cerrar" className="zoom-pop-up__close-button pop-up__close" id="close-button3"
-               src={closeButton}/>
-          <h2 id="popUP-img-title" className="zoom-pop-up__title"></h2>
-        </div>
-      </div>
-
       {/* Pop up Are you sure? */}
       <div className="pop-up" id="pop-up4">
         <div className="pop-up__delete-container">

@@ -32,28 +32,25 @@ function App() {
   }
   
   return (
-      <>
     <div className="root">
-    <div className="page">
-      <Header />
-      <Main
-        onEditAvatarClick={handleEditAvatarClick}
-        onEditProfileClick={handleEditProfileClick}
-        onAddPlaceClick={handleAddPlaceClick}
-        arePopupsOpen={[
-          isEditProfilePopupOpen,
-          isAddPlacePopupOpen,
-          isEditAvatarPopupOpen,
-        ]}
-        onClose={closeAllPopups}
-        onCardClick={handleCardClick}
-        selectedCard={selectedCard}
-      />
-      <Footer />
+      <div className="page">
+        <Header />
+        <Main
+          onEditAvatarClick={handleEditAvatarClick}
+          onEditProfileClick={handleEditProfileClick}
+          onAddPlaceClick={handleAddPlaceClick}
+          arePopupsOpen={[
+            isEditProfilePopupOpen,
+            isAddPlacePopupOpen,
+            isEditAvatarPopupOpen,
+          ]}
+          onClose={closeAllPopups}
+          onCardClick={handleCardClick}
+          selectedCard={selectedCard}
+        />
+        <Footer />
+      </div>
     </div>
-    
-    </div>
-    </>
   );
 }
 
