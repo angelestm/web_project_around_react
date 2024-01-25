@@ -5,7 +5,7 @@ import PopupWithForm from "./PopupWithForm";
 import api from "../utils/api";
 import {useEffect, useState} from "react";
 import Card from "./Card";
-import PopupWithImage from "./PopupWithImage";
+import ImagePopUp from "./ImagePopUp";
 
 function Main(
     {
@@ -188,7 +188,7 @@ function Main(
         </form>
       </PopupWithForm>
       
-      <PopupWithImage
+      <ImagePopUp
         title={selectedCard?.name || ""}
         image={selectedCard?.link || ""}
         isOpen={!!selectedCard}

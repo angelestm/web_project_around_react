@@ -1,6 +1,6 @@
 import closeButton from "../images/CloseIcon.png";
 
-function PopupWithImage({title, image, isOpen, onClose}) {
+function ImagePopUp({title, image, isOpen, onClose}) {
   return (
       <div
           id="pop-up3"
@@ -24,4 +24,4 @@ function PopupWithImage({title, image, isOpen, onClose}) {
   );
 }
 
-export default PopupWithImage;
+export default ImagePopUp;
