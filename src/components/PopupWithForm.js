@@ -2,7 +2,8 @@ import closeButton from "../images/CloseIcon.png";
 
 function PopupWithForm({name, title, id, children, isOpen, onClose}) {
   return (
-      <div id={id} className={`pop-up popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}>
+      <div id={id}
+           className={`pop-up popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}>
         <div className="pop-up__container">
           <img
               alt="Icono de cerrar"

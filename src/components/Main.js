@@ -1,25 +1,61 @@
-import profilePhoto from "../images/profile__photo.png"
 import editButton from "../images/EditButton.png"
 import addButton from "../images/AddButton.png"
 import closeButton from "../images/CloseIcon.png";
 import PopupWithForm from "./PopupWithForm";
+import api from "../utils/api";
+import {useEffect, useState} from "react";
+import Card from "./Card";
+import PopupWithImage from "./PopupWithImage";
 
-function Main({onEditAvatarClick, onEditProfileClick, onAddPlaceClick, isOpen, onClose}) {
+function Main(
+    {
+      onEditAvatarClick,
+      onEditProfileClick,
+      onAddPlaceClick,
+      arePopupsOpen,
+      onClose,
+      onCardClick,
+      selectedCard,
+    }
+) {
   const [
     isEditProfilePopupOpen,
     isAddPlacePopupOpen,
     isEditAvatarPopupOpen,
-  ] = isOpen;
+  ] = arePopupsOpen;
+  
+  const [userName, setUserName] = useState("");
+  const [userDescription, setUserDescription] = useState("");
+  const [userAvatar, setUserAvatar] = useState("");
+  const [cards, setCards] = useState([]);
+  
+  useEffect(() => {
+    api.getURL("/users/me").then((userInfo) => {
+      setUserName(userInfo.name);
+      setUserDescription(userInfo.about);
+      setUserAvatar(userInfo.avatar);
+    });
+    
+    api.getURL("/cards").then((cards) => {
+      setCards(cards);
+    });
+  }, []);
+  
   return (
     <main>
       <section className="profile">
         <div className="profile__photo-overlay"
              onClick={onEditAvatarClick}
         ></div>
-        <img id="profilePhoto" alt="profile" className="profile__photo" src={profilePhoto}/>
+        <img
+            id="profilePhoto"
+            alt="profile"
+            className="profile__photo"
+            style={{ backgroundImage: `url(${userAvatar})` }}
+        />
         <div className="profile__info">
-          <h2 className="profile__name">Jacques Cousteau</h2>
-          <h2 className="profile__description">Explorador</h2>
+          <h2 className="profile__name">{userName}</h2>
+          <h2 className="profile__description">{userDescription}</h2>
           <img id="editButton" alt="Edit-Button" className="profile__edit-button" src={editButton}
                onClick={onEditProfileClick}
           />
@@ -31,21 +67,17 @@ function Main({onEditAvatarClick, onEditProfileClick, onAddPlaceClick, isOpen, o
         </div>
       </section>
       <section className="elements">
+        {
+          cards.map((card, index) => (
+            <Card
+                key={`card-id-${index}`}
+                card={card}
+                id={`card-id-${index}`}
+                onCardClick={onCardClick}
+            />
+          ))
+        }
       </section>
-
-      <template className="card">
-        <div className="element" id="card-0">
-          <img id="deleteButton" alt="Delete-Button" className="element__delete-button"/>
-          <img src="https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/yosemite.jpg"
-               alt="Foto del Valle de Yosemite" className="element__image"/>
-          <div className="element__content"><p className="element__description">Valle de Yosemite</p>
-            <div>
-              <img id="likeButton" alt="Like-Button" className="element__like-button"/>
-              <p className="element__like-count">3</p>
-            </div>
-          </div>
-        </div>
-      </template>
       
       
       {/* Pop up Edit Profile */}
@@ -155,6 +187,13 @@ function Main({onEditAvatarClick, onEditProfileClick, onAddPlaceClick, isOpen, o
           <button type="submit" className="button">Guardar</button>
         </form>
       </PopupWithForm>
+      
+      <PopupWithImage
+        title={selectedCard?.name || ""}
+        image={selectedCard?.link || ""}
+        isOpen={!!selectedCard}
+        onClose={onClose}
+      />
     </main>
   );
 }

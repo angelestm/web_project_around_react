@@ -1,3 +1,8 @@
+@font-face {
+  font-family: inter;
+  src: url(/src/fonts/Inter-Regular.woff) format("woff");
+}
+
 h1, h2, h3, h4, h5, h6, p, body, a, hr {
   margin: 0;
   padding: 0;
@@ -14,7 +19,7 @@ a {
 
 .root {
   background: #000000;
-  font-family: "Inter";
+  font-family: "Inter", Sans-Serif, sans-serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
