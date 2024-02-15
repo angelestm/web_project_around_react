@@ -12,7 +12,8 @@ function Main(
       onCardClick,
       cards,
       children,
-      onCardDelete
+      onCardDelete,
+      onCardLike
     }
 ) {
   
@@ -52,6 +53,7 @@ function Main(
                 id={`card-id-${index}`}
                 onCardClick={onCardClick}
                 onCardDelete={onCardDelete}
+                onCardLike={onCardLike}
             />
           ))
         }
