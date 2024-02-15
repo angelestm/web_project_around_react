@@ -9,3 +9,11 @@
   color: #000000;
   opacity: 0.7;
 }
+
+.element__delete-button_visible {
+  visibility: visible;
+}
+
+.element__delete-button_hidden {
+  visibility: hidden;
+}

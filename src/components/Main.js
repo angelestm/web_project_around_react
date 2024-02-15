@@ -1,45 +1,25 @@
 import editButton from "../images/EditButton.png"
 import addButton from "../images/AddButton.png"
-import closeButton from "../images/CloseIcon.png";
-import PopupWithForm from "./PopupWithForm";
-import api from "../utils/api";
-import {useEffect, useState} from "react";
+import {useContext} from "react";
 import Card from "./Card";
 import ImagePopUp from "./ImagePopUp";
+import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
 function Main(
     {
       onEditAvatarClick,
       onEditProfileClick,
       onAddPlaceClick,
-      arePopupsOpen,
       onClose,
       onCardClick,
       selectedCard,
+      cards,
+      children,
+      onCardDelete
     }
 ) {
-  const [
-    isEditProfilePopupOpen,
-    isAddPlacePopupOpen,
-    isEditAvatarPopupOpen,
-  ] = arePopupsOpen;
   
-  const [userName, setUserName] = useState("");
-  const [userDescription, setUserDescription] = useState("");
-  const [userAvatar, setUserAvatar] = useState("");
-  const [cards, setCards] = useState([]);
-  
-  useEffect(() => {
-    api.getURL("/users/me").then((userInfo) => {
-      setUserName(userInfo.name);
-      setUserDescription(userInfo.about);
-      setUserAvatar(userInfo.avatar);
-    });
-    
-    api.getURL("/cards").then((cards) => {
-      setCards(cards);
-    });
-  }, []);
+  const currentUser = useContext(CurrentUserContext);
   
   return (
     <main>
@@ -51,11 +31,11 @@ function Main(
             id="profilePhoto"
             alt="profile"
             className="profile__photo"
-            style={{ backgroundImage: `url(${userAvatar})` }}
+            style={{ backgroundImage: `url(${currentUser?.avatar})` }}
         />
         <div className="profile__info">
-          <h2 className="profile__name">{userName}</h2>
-          <h2 className="profile__description">{userDescription}</h2>
+          <h2 className="profile__name">{currentUser?.name}</h2>
+          <h2 className="profile__description">{currentUser?.about}</h2>
           <img id="editButton" alt="Edit-Button" className="profile__edit-button" src={editButton}
                onClick={onEditProfileClick}
           />
@@ -74,78 +54,13 @@ function Main(
                 card={card}
                 id={`card-id-${index}`}
                 onCardClick={onCardClick}
+                onCardDelete={onCardDelete}
             />
           ))
         }
       </section>
       
-      
-      {/* Pop up Edit Profile */}
-      <PopupWithForm
-          id={"pop-up1"}
-          name={"edit-profile"}
-          isOpen={isEditProfilePopupOpen}
-          title={"Editar perfil"}
-          onClose={onClose}
-      >
-        <form className="form" id="form1" noValidate>
-          <input
-              className="form__input"
-              id="user-name"
-              type="text"
-              placeholder="Nombre"
-              maxLength="40"
-              minLength="2"
-              required
-              name="name"
-          />
-          <span className="user-name-error"></span>
-          <input
-              className="form__input" id="user-about"
-              type="text"
-              placeholder="Acerca de mí"
-              maxLength="200"
-              minLength="2"
-              required
-              name="about"
-          />
-          <span className="user-about-error"></span>
-          <button type="submit" className="button">Guardar</button>
-        </form>
-      </PopupWithForm>
-
-      {/* Pop up Add new place */}
-      <PopupWithForm
-          id={"pop-up2"}
-          name={"new-place"}
-          isOpen={isAddPlacePopupOpen}
-          title={"Nuevo Lugar"}
-          onClose={onClose}
-      >
-        <form className="form" id="form2" noValidate>
-          <input
-              className="form__input"
-              id="title"
-              type="text"
-              placeholder="Titulo"
-              maxLength="30"
-              minLength="2"
-              required
-              name="name"
-          />
-          <span className="title-error"></span>
-          <input
-              className="form__input"
-              id="image-link"
-              type="url"
-              placeholder="Enlace a la imagen"
-              required
-              name="link"
-          />
-          <span className="image-link-error"></span>
-          <button type="submit" className="button">Crear</button>
-        </form>
-      </PopupWithForm>
+      {children}
 
       {/* Pop up Are you sure? */}
       <div className="pop-up" id="pop-up4">
@@ -155,28 +70,6 @@ function Main(
           <button type="submit" className="button">Sí</button>
         </div>
       </div>
-
-      {/* Pop up Edit Avatar */}
-      <PopupWithForm
-          id={"pop-up5"}
-          name={"edit-avatar"}
-          isOpen={isEditAvatarPopupOpen}
-          title={"Cambiar foto de perfil"}
-          onClose={onClose}
-      >
-        <form className="form" id="form3" noValidate>
-          <input
-              className="form__input"
-              id="image-profile"
-              type="url"
-              placeholder="Enlace a la imagen"
-              required
-              name="link"
-          />
-          <span className="image-link-error"></span>
-          <button type="submit" className="button">Guardar</button>
-        </form>
-      </PopupWithForm>
       
       <ImagePopUp
         title={selectedCard?.name || ""}
