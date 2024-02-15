@@ -2,7 +2,7 @@ import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import "../index.css";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 import api from "../utils/api";
 import EditProfilePopup from "./EditProfilePopup";
@@ -56,6 +56,7 @@ function App() {
           setCards(newCards);
         })
   }
+  
   function handleAddPlaceSubmit(card) {
     api.updateURL("POST", "/cards", card)
         .then((newCard => {
@@ -63,9 +64,11 @@ function App() {
           setIsAddPlacePopupOpen(false);
         }))
   }
+  
   function handleEditAvatarClick () {
     setIsEditAvatarPopupOpen(true);
   }
+  
   function handleEditProfileClick () {
     setIsEditProfilePopupOpen(true);
   }
@@ -83,7 +86,10 @@ function App() {
         "/users/me",
         data
     ).then(() => {
-      setCurrentUSer(data);
+      setCurrentUSer({
+        ...currentUser,
+        ...data,
+      });
       setIsEditProfilePopupOpen(false);
     })
   }
@@ -103,6 +109,7 @@ function App() {
     setSelectedCard(null);
   }
   
+  console.log("testing", currentUser)
   return (
       <div className="root">
         <div className="page">
