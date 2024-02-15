@@ -5,9 +5,10 @@ import "../index.css";
 import {useEffect, useState} from "react";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 import api from "../utils/api";
-import EditProfilePopUp from "./EditProfilePopUp";
+import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+import ImagePopup from "./ImagePopup";
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -121,7 +122,7 @@ function App() {
                 onCardLike={handleCardLike}
                 onCardDelete={handleCardDelete}
             >
-              <EditProfilePopUp
+              <EditProfilePopup
                   isOpen={isEditProfilePopupOpen}
                   onClose={closeAllPopups}
                   onUpdateUser={handleUpdateUser}
@@ -134,6 +135,12 @@ function App() {
                   isOpen={isAddPlacePopupOpen}
                   onClose={closeAllPopups}
                   onAddPlace={handleAddPlaceSubmit}
+              />
+              <ImagePopup
+                  title={selectedCard?.name || ""}
+                  image={selectedCard?.link || ""}
+                  isOpen={!!selectedCard}
+                  onClose={closeAllPopups}
               />
             </Main>
             <Footer />

@@ -2,7 +2,6 @@ import editButton from "../images/EditButton.png"
 import addButton from "../images/AddButton.png"
 import {useContext} from "react";
 import Card from "./Card";
-import ImagePopUp from "./ImagePopUp";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
 function Main(
@@ -10,9 +9,7 @@ function Main(
       onEditAvatarClick,
       onEditProfileClick,
       onAddPlaceClick,
-      onClose,
       onCardClick,
-      selectedCard,
       cards,
       children,
       onCardDelete
@@ -71,12 +68,6 @@ function Main(
         </div>
       </div>
       
-      <ImagePopUp
-        title={selectedCard?.name || ""}
-        image={selectedCard?.link || ""}
-        isOpen={!!selectedCard}
-        onClose={onClose}
-      />
     </main>
   );
 }
