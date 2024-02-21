@@ -1,15 +1,17 @@
 import PopupWithForm from "./PopupWithForm";
-import {useContext, useEffect, useState} from "react";
-import {CurrentUserContext} from "../contexts/CurrentUserContext";
+import {useState} from "react";
 
 function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
 
-  const currentUser = useContext(CurrentUserContext);
-  const [name, setName] = useState(currentUser?.name || "");
-  const [description, setDescription] = useState(currentUser?.about || "");
+  // TODO: Removiendo valor inicial de los inputs
+  // const currentUser = useContext(CurrentUserContext);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const formIsValid = name.length > 2 && description.length > 2;
 
 // Después de cargar el usuario actual desde la API
 // sus datos serán usados en componentes gestionados.
+  /*
   useEffect(() => {
     // Reviso que el usuario en el contexto no sea `undefined`
     if (currentUser) {
@@ -17,6 +19,7 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
       setDescription(currentUser.about);
     }
   }, [currentUser]);
+   */
   
   function handleChange(evt) {
     if (evt.target.name === "name") {
@@ -29,6 +32,10 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
   function handleSubmit(e) {
     // Evita que el navegador navegue hacia la dirección del formulario
     e.preventDefault();
+    
+    // Limpiando los inputs
+    setName("");
+    setDescription("");
     
     // Pasa los valores de los componentes gestionados al controlador externo
     onUpdateUser({
@@ -62,6 +69,7 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
               required
               name="name"
               onChange={handleChange}
+              value={name}
           />
           <span className="user-name-error"></span>
           <input
@@ -73,9 +81,10 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
               required
               name="about"
               onChange={handleChange}
+              value={description}
           />
           <span className="user-about-error"></span>
-          <button type="submit" className="button">Guardar</button>
+          <button type="submit" className="button" disabled={!formIsValid}>Guardar</button>
         </form>
       </PopupWithForm>
   )

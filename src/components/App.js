@@ -2,7 +2,7 @@ import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import "../index.css";
-import {useContext, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 import api from "../utils/api";
 import EditProfilePopup from "./EditProfilePopup";
@@ -28,6 +28,18 @@ function App() {
     api.getURL("/cards").then((cards) => {
       setCards(cards);
     });
+  }, []);
+  
+  useEffect(() => {
+    function handleKeyDown (event) {
+      if (event.key === "Escape") {
+        setSelectedCard(false);
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    }
   }, []);
   
   function handleCardLike(card) {
@@ -109,7 +121,6 @@ function App() {
     setSelectedCard(null);
   }
   
-  console.log("testing", currentUser)
   return (
       <div className="root">
         <div className="page">

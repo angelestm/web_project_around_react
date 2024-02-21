@@ -4,6 +4,7 @@ import {useState} from "react";
 function AddPlacePopup({isOpen, onClose, onAddPlace}) {
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
+  const formIsValid = name.length > 2 && link.length > 2;
   
   function handleChange(evt) {
     if (evt.target.name === "name") {
@@ -51,7 +52,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
               onChange={handleChange}
           />
           <span className="image-link-error"></span>
-          <button type="submit" className="button">Crear</button>
+          <button type="submit" className="button" disabled={!formIsValid}>Crear</button>
         </form>
       </PopupWithForm>
   )

@@ -13,7 +13,8 @@ function Main(
       cards,
       children,
       onCardDelete,
-      onCardLike
+      onCardLike,
+      onKeyDown
     }
 ) {
   
@@ -38,10 +39,8 @@ function Main(
                onClick={onEditProfileClick}
           />
         </div>
-        <div className="profile__add-button-container">
-          <img id="addButton" alt="Add-Button" className="profile__add-button" src={addButton}
-               onClick={onAddPlaceClick}
-          />
+        <div className="profile__add-button-container" onClick={onAddPlaceClick}>
+          <img id="addButton" alt="Add-Button" className="profile__add-button" src={addButton}/>
         </div>
       </section>
       <section className="elements">
