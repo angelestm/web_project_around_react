@@ -33,6 +33,9 @@ function App() {
   useEffect(() => {
     function handleKeyDown (event) {
       if (event.key === "Escape") {
+        setIsEditProfilePopupOpen(false);
+        setIsEditAvatarPopupOpen(false);
+        setIsAddPlacePopupOpen(false);
         setSelectedCard(false);
       }
     }

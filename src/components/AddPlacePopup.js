@@ -1,10 +1,19 @@
 import PopupWithForm from "./PopupWithForm";
 import {useState} from "react";
 
+function isValidURL(url) {
+  try {
+    new URL(url);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
 function AddPlacePopup({isOpen, onClose, onAddPlace}) {
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
-  const formIsValid = name.length > 2 && link.length > 2;
+  const isLinkValid = isValidURL(link);
+  const formIsValid = name.length > 2 && link.length > 2 && isLinkValid;
   
   function handleChange(evt) {
     if (evt.target.name === "name") {
@@ -15,10 +24,12 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    onAddPlace({
-      name: name,
-      link: link,
-    });
+    if (isLinkValid) {
+      onAddPlace({
+        name: name,
+        link: link,
+      });
+    }
   }
   
   return(
@@ -41,7 +52,10 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
               name="name"
               onChange={handleChange}
           />
-          <span className="title-error"></span>
+          {
+              name.length <= 2 &&
+              <span className="form__input-span-error_active">El texto debe tener más de 2 caracteres</span>
+          }
           <input
               className="form__input"
               id="image-link"
@@ -51,7 +65,10 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
               name="link"
               onChange={handleChange}
           />
-          <span className="image-link-error"></span>
+          {
+              !isLinkValid &&
+              <span className="form__input-span-error_active">URL invalida</span>
+          }
           <button type="submit" className="button" disabled={!formIsValid}>Crear</button>
         </form>
       </PopupWithForm>

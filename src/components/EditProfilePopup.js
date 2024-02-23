@@ -1,17 +1,18 @@
 import PopupWithForm from "./PopupWithForm";
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
 function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
 
-  // TODO: Removiendo valor inicial de los inputs
-  // const currentUser = useContext(CurrentUserContext);
+
+  const currentUser = useContext(CurrentUserContext);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const formIsValid = name.length > 2 && description.length > 2;
 
 // Después de cargar el usuario actual desde la API
 // sus datos serán usados en componentes gestionados.
-  /*
+
   useEffect(() => {
     // Reviso que el usuario en el contexto no sea `undefined`
     if (currentUser) {
@@ -19,8 +20,7 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
       setDescription(currentUser.about);
     }
   }, [currentUser]);
-   */
-  
+
   function handleChange(evt) {
     if (evt.target.name === "name") {
       setName(evt.target.value);
@@ -71,7 +71,10 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
               onChange={handleChange}
               value={name}
           />
-          <span className="user-name-error"></span>
+          {
+            name.length <= 2 &&
+              <span className="form__input-span-error_active">El texto debe tener más de 2 caracteres</span>
+          }
           <input
               className="form__input" id="user-about"
               type="text"
@@ -83,7 +86,10 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
               onChange={handleChange}
               value={description}
           />
-          <span className="user-about-error"></span>
+          {
+            description.length <= 2 &&
+              <span className="form__input-span-error_active">El texto debe tener mas de 2 caracteres</span>
+          }
           <button type="submit" className="button" disabled={!formIsValid}>Guardar</button>
         </form>
       </PopupWithForm>

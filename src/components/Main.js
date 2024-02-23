@@ -14,7 +14,6 @@ function Main(
       children,
       onCardDelete,
       onCardLike,
-      onKeyDown
     }
 ) {
   

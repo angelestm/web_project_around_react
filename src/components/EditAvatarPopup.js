@@ -1,18 +1,36 @@
 import PopupWithForm from "./PopupWithForm";
-import {useContext, useRef} from "react";
+import {useContext, useRef, useState} from "react";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
+
+function isValidURL(url) {
+  try {
+    new URL(url);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
 
 function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
   const currentUser = useContext(CurrentUserContext);
   const avatarRef = useRef(currentUser?.avatar ?? "");
+  const [error, setError] = useState("");
   
   function handleSubmit(e) {
     e.preventDefault();
     
-    onUpdateAvatar({
-      avatar: avatarRef.current.value,
-    });
+    const avatar = avatarRef.current.value;
+    
+    if (isValidURL(avatar)) {
+      setError("");
+      onUpdateAvatar({
+        avatar: avatarRef.current.value,
+      });
+    } else {
+      setError("URL invalida");
+    }
   }
+  
   return (
       <PopupWithForm
           id={"pop-up5"}
@@ -31,7 +49,10 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
               name="link"
               ref={avatarRef}
           />
-          <span className="image-link-error"></span>
+          {
+            !!error &&
+              <span className="form__input-span-error_active">{error}</span>
+          }
           <button type="submit" className="button">Guardar</button>
         </form>
       </PopupWithForm>
